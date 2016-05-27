@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ykandrirody/training-devops-v2-versioning-of-database.svg?branch=master)](https://travis-ci.org/ykandrirody/training-devops-v2-versioning-of-database)
 
-# 1 - Preparation (you can offline after this step)
+# 1 - Preparation (you can be offline after this step)
 
 ## 1.1 - Clone the repository locally
 ```
