@@ -5,6 +5,13 @@ services:
 
 
 script:
+    - docker-compose -version
+    - sudo -i
+    - curl -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+    - chmod +x /usr/local/bin/docker-compose
+    - exit
+    - docker-compose -version
+
     # Build image
     - docker-compose up -d
 
