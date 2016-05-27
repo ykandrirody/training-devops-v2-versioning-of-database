@@ -40,7 +40,7 @@ script:
     - docker exec -it mysql.all mysql -u liquiuser -pliquipw liquidb -e "show tables;"
 
     # Run Version 1 - on Database Init (related to contexts)
-    - docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_init_1.sh"'
+    - docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_dev_1.sh"'
 
     # Check the modifications
     - docker exec -it mysql.init mysql -u liquiuser -pliquipw liquidb -e "desc person;"
@@ -48,14 +48,14 @@ script:
     - docker exec -it mysql.init mysql -u liquiuser -pliquipw liquidb -e "show tables;" | grep -q person
 
     # Run Version 2 - on Database Init (related to contexts)
-    - docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_init_2.sh"'
+    - docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_dev_2.sh"'
 
     # Check the modifications
     - docker exec -it mysql.init mysql -u liquiuser -pliquipw liquidb -e "desc person;"
     - docker exec -it mysql.init mysql -u liquiuser -pliquipw liquidb -e "desc person;" | grep -q username
 
     # Run Version 1 - on Database All (related to contexts)
-    - docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_all_1.sh"'
+    - docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_prd_1.sh"'
 
     # Check the modifications
     - docker exec -it mysql.all mysql -u liquiuser -pliquipw liquidb -e "show tables;"
@@ -63,7 +63,7 @@ script:
     - docker exec -it mysql.all mysql -u liquiuser -pliquipw liquidb -e "show tables;" | grep -q DATABASECHANGELOGLOCK
 
     # Run Version 2 - on Database All (related to contexts)
-    - docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_all_2.sh"'
+    - docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_prd_2.sh"'
 
     # Check the modifications
     - docker exec -it mysql.all mysql -u liquiuser -pliquipw liquidb -e "show tables;"
