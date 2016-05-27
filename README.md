@@ -29,10 +29,15 @@ http://localhost:8082/
 
 ## 2.3 - Run Liquibase
 ```
-docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_dev_1.sh"'
-docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_dev_2.sh"'
-docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_prd_1.sh"'
-docker exec -it myliqui.global bash -c 'cd $BUILDENV; exec "/app/run_prd_2.sh"'
+docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_dev_v1.sh"'
+docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=run_dev_v1.properties update'
+
+
+docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_dev_v2.sh"'
+docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_dev_v3.sh"'
+docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_prd_v1.sh"'
+docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_prd_v2.sh"'
+docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_prd_v3.sh"'
 ```
 
 ## 4 - Deallocate resources

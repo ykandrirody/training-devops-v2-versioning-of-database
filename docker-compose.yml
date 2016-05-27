@@ -1,65 +1,62 @@
 version: '2'
 
 services:
-    thesql.init:
+    mysql.dev:
         image: mysql:5.7
-        container_name: mysql.init
+        container_name: mysql.dev
         ports:
-        - 3311:3306
+        - 33011:3306
         environment:
-        - MYSQL_DATABASE=liquidb
-        - MYSQL_USER=liquiuser
-        - MYSQL_PASSWORD=liquipw
+        - MYSQL_DATABASE=devdb
+        - MYSQL_USER=theuser
+        - MYSQL_PASSWORD=thepw
         - MYSQL_ROOT_PASSWORD=rootpw
 
-    thepma.init:
-        image: phpmyadmin/phpmyadmin
-        container_name: mypma.init
+    pma.dev:
+        image: phpmyadmin/phpmyadmin:4.6.2-1
+        container_name: pma.dev
         links:
-        - thesql.init:db
+        - mysql.dev:db
         ports:
-        - 8081:80
+        - 33081:80
         restart: always
         environment:
-        - PMA_USER=liquiuser
-        - PMA_PASSWORD=liquipw
+        - PMA_USER=theuser
+        - PMA_PASSWORD=thepw
         depends_on:
-            - thesql.init
+            - mysql.dev
 
-    thesql.all:
+    mysql.prd:
         image: mysql:5.7
-        container_name: mysql.all
+        container_name: mysql.prd
         ports:
-        - 3312:3306
+        - 33012:3306
         environment:
-        - MYSQL_DATABASE=liquidb
-        - MYSQL_USER=liquiuser
-        - MYSQL_PASSWORD=liquipw
+        - MYSQL_DATABASE=prddb
+        - MYSQL_USER=theuser
+        - MYSQL_PASSWORD=thepw
         - MYSQL_ROOT_PASSWORD=rootpw
 
-    thepma.all:
-        image: phpmyadmin/phpmyadmin
-        container_name: mypma.all
+    pma.prd:
+        image: phpmyadmin/phpmyadmin:4.6.2-1
+        container_name: pma.prd
         links:
-        - thesql.all:db
+        - mysql.prd:db
         ports:
-        - 8082:80
+        - 33082:80
         restart: always
         environment:
-        - PMA_USER=liquiuser
-        - PMA_PASSWORD=liquipw
+        - PMA_USER=theuser
+        - PMA_PASSWORD=thepw
         depends_on:
-            - thesql.all
+            - mysql.prd
 
-    theliqui.global:
+    liquibase.global:
         build: docker-liquibase/.
-        container_name: myliqui.global
-        environment:
-        - DBSERVERINIT=thedbserverinit
-        - DBSERVERALL=thedbserverall
+        container_name: liquibase.global
         links:
-        - thesql.init:thedbserverinit
-        - thesql.all:thedbserverall
+        - mysql.dev:mysql.dev
+        - mysql.prd:mysql.prd
         depends_on:
-            - thesql.init
-            - thesql.all
+            - mysql.dev
+            - mysql.prd
