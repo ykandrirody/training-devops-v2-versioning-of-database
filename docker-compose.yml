@@ -1,0 +1,65 @@
+version: '2'
+
+services:
+    thesql.init:
+        image: mysql:5.7
+        container_name: mysql.init
+        ports:
+        - 3311:3306
+        environment:
+        - MYSQL_DATABASE=liquidb
+        - MYSQL_USER=liquiuser
+        - MYSQL_PASSWORD=liquipw
+        - MYSQL_ROOT_PASSWORD=rootpw
+
+    thepma.init:
+        image: phpmyadmin/phpmyadmin
+        container_name: mypma.init
+        links:
+        - thesql.init:db
+        ports:
+        - 8081:80
+        restart: always
+        environment:
+        - PMA_USER=liquiuser
+        - PMA_PASSWORD=liquipw
+        depends_on:
+            - thesql.init
+
+    thesql.all:
+        image: mysql:5.7
+        container_name: mysql.all
+        ports:
+        - 3312:3306
+        environment:
+        - MYSQL_DATABASE=liquidb
+        - MYSQL_USER=liquiuser
+        - MYSQL_PASSWORD=liquipw
+        - MYSQL_ROOT_PASSWORD=rootpw
+
+    thepma.all:
+        image: phpmyadmin/phpmyadmin
+        container_name: mypma.all
+        links:
+        - thesql.all:db
+        ports:
+        - 8082:80
+        restart: always
+        environment:
+        - PMA_USER=liquiuser
+        - PMA_PASSWORD=liquipw
+        depends_on:
+            - thesql.all
+
+    theliqui.global:
+        build: docker-liquibase/.
+        container_name: myliqui.global
+        environment:
+        - DBSERVERINIT=thedbserverinit
+        - DBSERVERALL=thedbserverall
+        links:
+        - thesql.init:thedbserverinit
+        - thesql.all:thedbserverall
+        depends_on:
+            - thesql.init
+            - thesql.all

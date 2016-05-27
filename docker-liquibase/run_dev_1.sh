@@ -1,0 +1,1 @@
+java -jar /app/liquibase-3.4.2-bin/liquibase.jar --driver=com.mysql.jdbc.Driver --classpath=/app/mysql-connector-java-5.0.8/mysql-connector-java-5.0.8-bin.jar --changeLogFile=/app/LiquibaseV1/changelog.xml --url="jdbc:mysql://$DBSERVERINIT:3306/liquidb" --username=liquiuser --password=liquipw --logLevel=info --contexts=init update
