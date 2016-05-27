@@ -86,7 +86,7 @@ script:
     # Check the modifications
 
     # Test PhpMyAdmin on Database dev
-    - curl http://127.0.0.1:8081/ | grep -q devdb
+    - curl http://127.0.0.1:33081/ | grep -q devdb
 
     # Test PhpMyAdmin on Database prd
-    - curl http://127.0.0.1:8082/ | grep -q prddb
+    - curl http://127.0.0.1:33082/ | grep -q prddb
