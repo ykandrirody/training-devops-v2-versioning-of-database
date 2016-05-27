@@ -28,23 +28,33 @@ http://localhost:8081/
 http://localhost:8082/
 
 ## 2.3 - Run Liquibase
+
+Do it step by step
+
 ```
-docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_dev_v1.sh"'
-docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=run_dev_v1.properties update'
-
-
-docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_dev_v2.sh"'
-docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_dev_v3.sh"'
-docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_prd_v1.sh"'
-docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_prd_v2.sh"'
-docker exec -it liquibase.global bash -c 'cd $BUILDENV; exec "/app/run_prd_v3.sh"'
+docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v1.properties update'
+docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v2.properties update'
+docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v3.properties update'
+docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v1.properties update'
+docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v2.properties update'
+docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v3.properties update'
 ```
 
-## 4 - Deallocate resources
+You can launch all of them with :
+```
+./training-devops-v2-versioning-of-database/run_practical.sh
+```
+
+## 4 - Deallocate resources - End of the practical !
 
 Stop all containers :
 ```
 docker-compose -f ./training-devops-v2-versioning-of-database/docker-compose.yml kill
 docker-compose -f ./training-devops-v2-versioning-of-database/docker-compose.yml rm -f -v -a
 ```
-Confirm with : y
+
+## 5 - Rebuild the composition after a modification
+
+```
+./training-devops-v2-versioning-of-database/rebuild.sh
+```

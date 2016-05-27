@@ -10,7 +10,7 @@
 		logicalFilePath="db.changelog"
 		>
 
-    <changeSet id="RELEASE-V1-1" author="nvoxland" context="init">
+    <changeSet id="RELEASE-V1.create-table-person" author="nvoxland" context="init">
         <createTable tableName="person">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -22,19 +22,19 @@
             <column name="state" type="char(2)"/>
         </createTable>
     </changeSet>
-    <changeSet id="RELEASE-V1-2" author="nvoxland" context="init">
+    <changeSet id="RELEASE-V1.table-person-add-column-username" author="nvoxland" context="init">
         <addColumn tableName="person">
             <column name="username" type="varchar(8)"/>
         </addColumn>
     </changeSet>
     
-    <changeSet id="RELEASE-V2-3" author="ykandrirody" runOnChange="false" 
-	  runAlways="false" failOnError="true" context="" >
+    <changeSet id="RELEASE-V2.create-table-state" author="ykandrirody" runOnChange="false" 
+	  runAlways="false" failOnError="true" context="prod" >
         <sqlFile path="RELEASE-V2-create-table-state.sql" relativeToChangelogFile="true" 
 		  splitStatements="true" stripComments="true" />
     </changeSet>
 
-    <changeSet id="RELEASE-V3-4" author="ykandrirody">
+    <changeSet id="RELEASE-V3.table-state-add-column-title" author="ykandrirody" context="prod">
         <addColumn tableName="state">
             <column name="title" type="varchar(8)"/>
         </addColumn>
