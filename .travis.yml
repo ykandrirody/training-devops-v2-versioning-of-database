@@ -33,7 +33,7 @@ script:
     - docker ps -a
 
     # Wait to databases start
-    - sleep 10
+    - sleep 20
 
     # Chech the initial state
     - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;"
