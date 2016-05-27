@@ -42,45 +42,46 @@ env:
 
 script:
     # Chech the initial state
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;"
-    - docker exec -it mysql.prd mysql -u theuser -pthepw prddb -e "show tables;"
-
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "show tables;"
     - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;" | wc -l
-    - docker exec -it mysql.prd mysql -u theuser -pthepw prddb -e "show tables;" | wc -l
-
     - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;" | wc -l | grep -q 1
-    - docker exec -it mysql.prd mysql -u theuser -pthepw prddb -e "show tables;" | wc -l | grep -q 1
 
     # Run Version 1 - on Database dev (related to contexts)
-    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v1.properties --contexts=init,prod update'
+    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v1.properties update'
 
     # Check the modifications
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;"
-    - docker exec -it mysql.prd mysql -u theuser -pthepw prddb -e "show tables;" | grep -q DATABASECHANGELOG
-    - docker exec -it mysql.prd mysql -u theuser -pthepw prddb -e "show tables;" | grep -q DATABASECHANGELOGLOCK
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;" | grep -q person
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;" | wc -l | grep -q 4
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "show tables;"
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "show tables;" | grep -q DATABASECHANGELOG
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "show tables;" | grep -q DATABASECHANGELOGLOCK
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "show tables;" | grep -q person
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "show tables;" | wc -l | grep -q 4
 
     # Run Version 2 - on Database dev (related to contexts)
-    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v2.properties --contexts=init,prod update'
+    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v2.properties update'
 
     # Check the modifications
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;"
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;" | grep -q state
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'state';"
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'state';" | wc -l
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;" | wc -l | grep -q 5
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "show tables;"
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "show tables;" | grep -q state
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'state';"
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'state';" | wc -l
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "show tables;" | wc -l | grep -q 5
 
     # Run Version 3 - on Database dev (related to contexts)
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;"
-    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v3.properties --contexts=init,prod update'
+    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v3.properties update'
 
     # Check the modifications
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;" | wc -l | grep -q 5
-    - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'state';"
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "show tables;"
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "show tables;" | wc -l | grep -q 5
+    - docker exec -it ${DB_SERVER} mysql -u theuser -pthepw ${DB_NAME} -e "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'state';"
 
+env:  
+    global:
+        - DB_SERVER=mysql.prd
+        - DB_NAME=prddb
+
+script:
     # Run Version 1 - on Database prd (related to contexts)
-    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v1.properties --contexts=prod update'
+    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v1.properties update'
 
     # Check the modifications
     - docker exec -it mysql.prd mysql -u theuser -pthepw prddb -e "show tables;"
@@ -89,7 +90,7 @@ script:
     - docker exec -it mysql.prd mysql -u theuser -pthepw prddb -e "show tables;" | wc -l | grep -q 3
 
     # Run Version 2 - on Database prd (related to contexts)
-    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v2.properties --contexts=prod update'
+    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v2.properties update'
 
     # Check the modifications
     - docker exec -it mysql.prd mysql -u theuser -pthepw prddb -e "show tables;"
@@ -99,7 +100,7 @@ script:
     - docker exec -it mysql.prd mysql -u theuser -pthepw prddb -e "show tables;" | wc -l | grep -q 4
 
     # Run Version 3 - on Database prd (related to contexts)
-    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v3.properties --contexts=prod update'
+    - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v3.properties update'
 
     # Check the modifications
     - docker exec -it mysql.prd mysql -u theuser -pthepw prddb -e "show tables;"
