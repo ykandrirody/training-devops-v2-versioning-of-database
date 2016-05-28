@@ -35,15 +35,6 @@ script:
     # Wait to databases start
     - sleep 20
 
-env:  
-    - DB_ENV=dev
-
-script:
-    # Chech the initial state
-    - docker exec -it mysql.${DB_ENV} mysql -u theuser -pthepw ${DB_ENV}db -e "show tables;"
-    - docker exec -it mysql.${DB_ENV} mysql -u theuser -pthepw ${DB_ENV}db -e "show tables;" | wc -l
-    - docker exec -it mysql.${DB_ENV} mysql -u theuser -pthepw ${DB_ENV}db -e "show tables;" | wc -l | grep -q 1
-
 
     # Test PhpMyAdmin on Database dev
     - curl http://127.0.0.1:33081/ | grep -q devdb
