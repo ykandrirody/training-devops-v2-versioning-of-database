@@ -25,6 +25,8 @@ script:
     - docker version
     - docker-compose version
 
+    - ls -lah
+
     # Build image
     - docker-compose up -d
 
