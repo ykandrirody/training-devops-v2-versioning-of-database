@@ -25,7 +25,6 @@ script:
     - docker version
     - docker-compose version
 
-script:
     # Build image
     - docker-compose up -d
 
@@ -34,8 +33,6 @@ script:
 
     # Wait to databases start
     - sleep 20
-
-script:
 
     # Run Version 1 - on Database dev (related to contexts)
     - docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v1.properties update'
