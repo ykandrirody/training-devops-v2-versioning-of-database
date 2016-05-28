@@ -1,7 +1,7 @@
 sudo: required
 
 services:
-  - docker
+    - docker
 
 env:  
     global:
@@ -64,7 +64,6 @@ script:
 
 
 
-script:
     # Chech the initial state
     - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;"
     - docker exec -it mysql.dev mysql -u theuser -pthepw devdb -e "show tables;" | wc -l
