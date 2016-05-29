@@ -11,7 +11,7 @@
 git clone https://github.com/ykandrirody/training-devops-v2-versioning-of-database.git
 ```
 
-## 1.2 - Download dependencies
+## 1.2 - Pull and build the Docker containers
 ```
 docker-compose -f ./training-devops-v2-versioning-of-database/docker-compose.yml pull
 docker-compose -f ./training-devops-v2-versioning-of-database/docker-compose.yml build
@@ -26,17 +26,24 @@ docker-compose -f ./training-devops-v2-versioning-of-database/docker-compose.yml
 ```
 
 ##  2.2 - Test phpmyadmin :
-http://localhost:8081/
-http://localhost:8082/
+PhpMyAdmin database dev : [http://localhost:8081/](http://localhost:8081/)
+
+PhpMyAdmin database prd : [http://localhost:8082/](http://localhost:8082/)
+
 
 ## 2.3 - Run Liquibase
 
-Do it step by step
+Do it step by step, and check modifications on PhpMyAdmin
 
+Dev :
 ```
 docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v1.properties update'
 docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v2.properties update'
 docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_dev_v3.properties update'
+```
+
+Prd :
+```
 docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v1.properties update'
 docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v2.properties update'
 docker exec -it liquibase.global bash -c 'java -jar liquibase-3.4.2.jar --defaultsFile=r_prd_v3.properties update'
