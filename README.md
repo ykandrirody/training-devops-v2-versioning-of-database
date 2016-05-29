@@ -56,7 +56,6 @@ You can launch all of them with :
 
 ## 4 - Deallocate resources - End of the practical !
 
-Stop all containers :
 ```
 docker-compose -f ./training-devops-v2-versioning-of-database/docker-compose.yml kill
 docker-compose -f ./training-devops-v2-versioning-of-database/docker-compose.yml rm -f -v -a
