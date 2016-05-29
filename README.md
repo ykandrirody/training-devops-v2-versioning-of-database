@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/ykandrirody/training-devops-v2-versioning-of-database.svg?branch=master)](https://travis-ci.org/ykandrirody/training-devops-v2-versioning-of-database)
 
+[Get the PDF of this README](https://gitprint.com/ykandrirody/training-devops-v2-versioning-of-database/blob/master/README.md)
+
 # 1 - Preparation (you can be offline after this step)
 
 ## 1.1 - Clone the repository locally
