@@ -26,9 +26,9 @@ docker-compose -f ./training-devops-v2-versioning-of-database/docker-compose.yml
 ```
 
 ##  2.2 - Test phpmyadmin :
-PhpMyAdmin database dev : [http://localhost:8081/](http://localhost:8081/)
+PhpMyAdmin database dev : [http://localhost:33081/](http://localhost:33081/)
 
-PhpMyAdmin database prd : [http://localhost:8082/](http://localhost:8082/)
+PhpMyAdmin database prd : [http://localhost:33082/](http://localhost:33082/)
 
 
 ## 2.3 - Run Liquibase
